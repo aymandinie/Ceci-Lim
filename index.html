@@ -35,8 +35,8 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
 body{font-family:'Jost',sans-serif;font-size:19px;background:var(--w);color:var(--text);cursor:none;}
-#cur{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .08s;}
-#ring{position:fixed;width:32px;height:32px;border:1px solid rgba(168,118,32,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;}
+#cur{position:fixed;left:0;top:0;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;will-change:transform;transition:scale .2s;}
+#ring{position:fixed;left:0;top:0;width:32px;height:32px;border:1px solid rgba(168,118,32,.35);border-radius:50%;pointer-events:none;z-index:9998;will-change:transform;transition:width .25s,height .25s,border-color .25s;}
 
 #loader{position:fixed;inset:0;z-index:9000;background:var(--ink);display:flex;align-items:center;justify-content:center;}
 .ld-logo{opacity:1;}
@@ -676,9 +676,10 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 /* === REVAMP: About Ceci (Scroll-zoom hero) === */
 .ceci-about{position:relative;z-index:5;height:250vh;background:#0a1828;margin-top:-100vh;}
 .ca-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#0a1828;}
-.ca-img-wrap{position:absolute;inset:0;top:60px;will-change:transform;transform:scale(1.35) translateX(10%);transform-origin:50% 30%;}
-.ca-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;}
+.ca-img-wrap{position:absolute;inset:0;top:60px;will-change:transform;backface-visibility:hidden;transform:scale(1.35) translateX(10%);transform-origin:50% 30%;}
+.ca-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;-webkit-mask-image:linear-gradient(to right,#000 0,#000 74%,rgba(0,0,0,.55) 86%,transparent 100%);mask-image:linear-gradient(to right,#000 0,#000 74%,rgba(0,0,0,.55) 86%,transparent 100%);}
 .ca-img-wrap::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 40%,transparent 35%,rgba(10,24,40,.45) 85%);pointer-events:none;}
+.ca-dim{position:absolute;inset:0;background:var(--ink);opacity:0;z-index:3;pointer-events:none;will-change:opacity;}
 .ca-overlay{position:absolute;inset:0;background:linear-gradient(to right,transparent 35%,rgba(10,24,40,.94) 62%);z-index:1;pointer-events:none;opacity:0;will-change:opacity;}
 .ca-content{position:absolute;right:0;top:0;bottom:0;width:44%;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:80px 72px;z-index:2;opacity:0;transform:translateY(30px);will-change:opacity,transform;}
 .ca-content .lbl{margin-bottom:4px;color:var(--gold);}
@@ -695,7 +696,7 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 .ca-name{position:absolute;bottom:48px;left:64px;z-index:2;color:rgba(255,255,255,.5);opacity:0;will-change:opacity;}
 
 /* === REVAMP: Why Work With Ceci (Stacked full-width rows) === */
-.why-ceci{position:relative;z-index:20;padding:100px 64px;background:var(--ink);overflow:hidden;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+.why-ceci{position:relative;z-index:20;padding:100px 64px;background:var(--ink);overflow:hidden;min-height:100vh;box-shadow:0 -140px 120px -30px var(--ink);display:flex;flex-direction:column;justify-content:center;}
 .wc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:60px;margin-bottom:64px;}
 .wc-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:300;color:var(--w);line-height:1.08;flex:1;max-width:500px;}
 .wc-header h2 em{font-style:italic;color:var(--gold);}
@@ -768,6 +769,28 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 .man-award-t{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:8px;}
 .man-award-sub{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);}
 .man-award-yr{font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-top:10px;font-weight:500;}
+.man-stats--awards{align-items:stretch;}
+.man-stat--lead{position:relative;}
+.man-stat-note{margin-top:18px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--soft);line-height:1.4;max-width:180px;}
+.man-aw{--mx:50%;--my:30%;position:relative;overflow:hidden;isolation:isolate;border-radius:8px;padding:40px 24px 34px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;
+  background:radial-gradient(120% 90% at 50% 0%,#1d3a66 0%,#10213f 48%,#0a1629 100%);border:1px solid rgba(200,152,42,.32);
+  box-shadow:0 1px 0 rgba(243,220,154,.18) inset,0 24px 50px -28px rgba(10,22,41,.55);transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s,border-color .5s;}
+.man-aw::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(260px circle at var(--mx) var(--my),rgba(232,196,110,.22),transparent 65%);opacity:0;transition:opacity .45s;}
+.man-aw::after{content:'';position:absolute;top:0;bottom:0;left:-60%;width:45%;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,236,190,.16) 45%,rgba(255,236,190,.32) 50%,rgba(255,236,190,.16) 55%,transparent);transform:skewX(-18deg) translateX(0);}
+.man-aw.shine::after{animation:manAwShine 1.6s cubic-bezier(.3,.6,.2,1) forwards;}
+@keyframes manAwShine{to{transform:skewX(-18deg) translateX(460%);}}
+.man-aw:hover{transform:translateY(-6px);border-color:rgba(232,196,110,.7);box-shadow:0 1px 0 rgba(243,220,154,.25) inset,0 34px 60px -30px rgba(10,22,41,.7);}
+.man-aw:hover::before{opacity:1;}
+.man-aw-glow{position:absolute;left:50%;top:86px;width:190px;height:190px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(232,196,110,.28),rgba(232,196,110,0) 68%);z-index:-1;pointer-events:none;}
+.man-aw-mark{height:112px;display:flex;align-items:center;justify-content:center;margin-bottom:26px;}
+.man-aw-mark img{height:100%;width:auto;display:block;filter:drop-shadow(0 10px 22px rgba(0,0,0,.45));}
+.man-aw-seal{display:block;width:112px;height:112px;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));}
+.man-aw-seal svg{width:100%;height:100%;overflow:visible;}
+.man-aw-t{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.55rem;line-height:1.15;color:#fff;margin-bottom:12px;}
+.man-aw-sub{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);line-height:1.7;}
+.man-aw-yr{margin-top:14px;padding-top:14px;border-top:1px solid rgba(200,152,42,.28);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g2);font-weight:500;}
+.man-honours{text-align:center;max-width:720px;text-wrap:balance;margin:-12px auto 56px;font-family:'Cormorant Garamond',serif;font-size:1.25rem;line-height:1.6;color:var(--text);font-weight:300;}
+.man-honours em{font-style:italic;color:var(--gold);}
 .man-cta-row{text-align:center;margin-bottom:56px;}
 .partner-marquee{width:100%;overflow:hidden;padding:48px 0 0;padding-bottom:48px;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);position:relative;z-index:1;}
 .partner-marquee-label{text-align:center;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:28px;}
@@ -857,7 +880,7 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 
 .props-header .lbl,.props-header h1,.props-filter-bar,.props-grid .prop-card{will-change:opacity,transform;}
 .props-grid{grid-template-columns:1fr;padding:0 32px 60px;}
-  .ca-content{width:100%;padding:48px 32px;background:rgba(12,10,8,.8);}
+  .ca-content{width:100%;padding:48px 32px;background:linear-gradient(to bottom,rgba(10,24,40,.55),rgba(10,24,40,.9) 30%);}
   .wc-header{flex-direction:column;gap:32px;}
   .wc-grid{flex-direction:column;}
   .wc-card{height:360px;}
@@ -900,7 +923,7 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 .jn-h1-line{transform:translateY(110%);}
 
 /* Founder */
-.jn-founder{padding:120px 80px;background:var(--w);position:relative;z-index:2;margin-top:-50vh;}
+.jn-founder{padding:120px 80px;background:var(--w);position:relative;z-index:2;margin-top:-50vh;border-radius:32px 32px 0 0;box-shadow:0 -30px 80px -20px rgba(4,10,20,.55);}
 .jn-founder-lbl{font-size:.65rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:48px;display:flex;align-items:center;gap:12px;}
 .jn-founder-lbl::before{content:'';flex:0 0 28px;height:1px;background:var(--gold);}
 .jn-founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
@@ -1144,6 +1167,34 @@ body.nav-open .logo-svg{color:#fff;filter:none;}
    (opacity:0 alone left them "in viewport", forcing every photo to download up front). */
 .page{display:none;}
 .page.active{display:block;}
+/* Results: 457+ and award cards */
+@media(max-width:1024px){.man-stats--awards{gap:18px;}.man-aw{padding:36px 22px 30px;}.man-aw-t{font-size:1.45rem;}}
+@media(max-width:640px){.man-stats--awards{grid-template-columns:1fr;gap:14px;}
+  .man-stat--lead{padding:36px 24px;}
+  .man-aw{flex-direction:row;align-items:center;text-align:left;gap:20px;padding:24px 22px;}
+  .man-aw-glow{left:58px;top:50%;width:150px;height:150px;}
+  .man-aw-mark{height:84px;width:76px;flex:0 0 76px;margin:0;}
+  .man-aw-seal{width:80px;height:80px;}
+  .man-aw-t{font-size:1.3rem;margin-bottom:8px;}.man-aw-t br{display:none;}
+  .man-aw-yr{margin-top:10px;padding-top:10px;}
+  .man-honours{font-size:1.1rem;margin:4px auto 44px;}}
+@media(prefers-reduced-motion:reduce){.man-aw.shine::after{animation:none;}}
+/* Mobile fixes: results header, contact form, join growth stats */
+@media(max-width:768px){
+  .man-top{flex-direction:column;gap:6px;margin-bottom:44px;}
+  .man-sub{max-width:none;padding-top:8px;}
+  .eq-form-section{padding:28px 24px 56px;}
+  .eq-form-grid{grid-template-columns:1fr;gap:32px;}
+  .jn-growth{padding:72px 24px;}
+  .jn-growth-stats{grid-template-columns:1fr 1fr;gap:14px;margin-bottom:56px;}
+  .jn-growth-stat{padding:32px 12px;}
+  .jn-growth-stat-n{font-size:clamp(2.2rem,9vw,3rem);}
+  .jn-sold-wrap{margin:0 -24px;padding:0 24px;}
+}
+@media(max-width:480px){.eq-frow{grid-template-columns:1fr;}}
+/* About Ceci: tablet metrics, mobile monogram clear of the button */
+@media(max-width:1024px){.ca-metrics{gap:28px;}.ca-n{font-size:2rem;white-space:nowrap;}}
+@media(max-width:768px){.ca-name{display:none;}}
 </style>
 <script>
 /* Any image that fails to load falls back to an on-brand tile instead of a broken icon. */
@@ -1335,6 +1386,7 @@ window.addEventListener('DOMContentLoaded',function(){
       <img src="assets/img/ceci-about.jpg" alt="Ceci Lim" loading="lazy" decoding="async"/>
     </div>
     <div class="ca-overlay"></div>
+    <div class="ca-dim"></div>
     <div class="ca-content">
       <div class="lbl rv">About Ceci Lim</div>
       <h2 class="rv">Trusted by Those<br>Who <em>Demand More</em></h2>
@@ -1531,28 +1583,39 @@ window.addEventListener('DOMContentLoaded',function(){
         <div class="man-divider rv"></div>
         <div class="man-text rv">Where Experience<br>Meets <em>Results.</em></div>
       </div>
-      <p class="man-sub rv">A proven track record across Malaysia's most prestigious addresses. Numbers that reflect years of trust, discretion, and exceptional outcomes.</p>
+      <p class="man-sub rv">Recognised by the industry, chosen by clients. A record earned one discreet transaction at a time, across Kuala Lumpur&rsquo;s most coveted addresses.</p>
     </div>
-    <div class="man-stats">
-      <div class="man-stat"><div class="man-stat-n">457+</div><div class="man-stat-l">Properties<br>Sold</div></div>
-      <div class="man-stat"><div class="man-stat-n">RM 198M+</div><div class="man-stat-l">GDV from<br>Featured Launches</div></div>
-      <div class="man-stat"><div class="man-stat-n">15+</div><div class="man-stat-l">Years of<br>Excellence</div></div>
-      <div class="man-stat"><div class="man-stat-n">Top 1%</div><div class="man-stat-l">Nationwide<br>Agent</div></div>
-    </div>
-    <!-- ================= AWARD LOGOS — DROP-IN SLOT =================
-         Client 20/04 note: "To have some award winning logos - pending finalization".
-         When the award artwork is confirmed, delete this comment wrapper and the block
-         below will render a logo strip above the CTA. Replace each <img loading="lazy" decoding="async"> src with the
-         award logo file (put files in assets/awards/).
-    <div class="man-awards">
-      <div class="man-awards-lbl">Awards &amp; Recognition</div>
-      <div class="man-awards-row">
-        <img src="assets/awards/award-1.png" alt="Award 1" loading="lazy" decoding="async"/>
-        <img src="assets/awards/award-2.png" alt="Award 2" loading="lazy" decoding="async"/>
-        <img src="assets/awards/award-3.png" alt="Award 3" loading="lazy" decoding="async"/>
+    <div class="man-stats man-stats--awards">
+      <div class="man-stat man-stat--lead"><div class="man-stat-n">457+</div><div class="man-stat-l">Properties<br>Sold</div><div class="man-stat-note">Across KLCC&rsquo;s signature residences</div></div>
+      <div class="man-aw">
+        <div class="man-aw-glow" aria-hidden="true"></div>
+        <div class="man-aw-mark"><img src="assets/awards/award-1.png" alt="National Real Estate Awards recipient badge" width="313" height="360" loading="lazy" decoding="async"/></div>
+        <div class="man-aw-body">
+          <div class="man-aw-t">State REN <br>of the Year</div>
+          <div class="man-aw-sub">Residential &middot; Wilayah Persekutuan</div>
+          <div class="man-aw-yr">National Real Estate Awards &rsquo;26</div>
+        </div>
+      </div>
+      <div class="man-aw">
+        <div class="man-aw-glow" aria-hidden="true"></div>
+        <div class="man-aw-mark"><img src="assets/awards/award-2.png" alt="MIEA Million Dollar Achiever medal" width="360" height="360" loading="lazy" decoding="async"/></div>
+        <div class="man-aw-body">
+          <div class="man-aw-t">Million Dollar <br>Achiever</div>
+          <div class="man-aw-sub">Malaysian Institute of Estate Agents</div>
+          <div class="man-aw-yr">National Real Estate Awards &rsquo;26</div>
+        </div>
+      </div>
+      <div class="man-aw">
+        <div class="man-aw-glow" aria-hidden="true"></div>
+        <div class="man-aw-mark"><span class="man-aw-seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="awGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dc9a"/><stop offset=".5" stop-color="#c8982a"/><stop offset="1" stop-color="#8a5e14"/></linearGradient><path id="awArc" d="M60 60 m-39.5 0 a39.5 39.5 0 1 1 79 0 a39.5 39.5 0 1 1 -79 0"/></defs><circle cx="60" cy="60" r="57" fill="url(#awGold)"/><circle cx="60" cy="60" r="50.5" fill="#0d1c36"/><circle cx="60" cy="60" r="47.5" fill="none" stroke="url(#awGold)" stroke-width=".7" opacity=".8"/><circle cx="60" cy="60" r="31" fill="none" stroke="url(#awGold)" stroke-width=".5" opacity=".55"/><text font-family="Jost,sans-serif" font-size="7" letter-spacing="2.6" fill="#e9cf8a"><textPath href="#awArc" startOffset="2%">PROPNEX MALAYSIA &#183; INDIVIDUAL PRODUCER &#183;</textPath></text><text x="60" y="64" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="28" font-style="italic" fill="#f0d790">Top</text><text x="60" y="80" text-anchor="middle" font-family="Jost,sans-serif" font-size="7.5" letter-spacing="3" fill="#e9cf8a">2025</text></svg></span></div>
+        <div class="man-aw-body">
+          <div class="man-aw-t">Top Individual <br>Producer</div>
+          <div class="man-aw-sub">PropNex Malaysia</div>
+          <div class="man-aw-yr">Honoured 2025</div>
+        </div>
       </div>
     </div>
-    ============================================================== -->
+    <p class="man-honours rv">Also honoured at PropNex for <em>top non-landed sales</em>, the <em>leading luxury project</em> and a <em>million&#8209;ringgit team</em>.</p>
     <div class="man-cta-row">
       <a href="#" class="btn-ink rv" data-page="enquire">Work With Ceci</a>
     </div>
@@ -2306,12 +2369,16 @@ document.getElementById('wipeLogo').appendChild(makeCL('#c8982a',70));
 
 var cur=document.getElementById('cur'),ring=document.getElementById('ring');
 var mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+var ringRun=false;
+function ringLoop(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;
+  if(Math.abs(mx-rx)<.1&&Math.abs(my-ry)<.1){rx=mx;ry=my;ringRun=false;}
+  ring.style.transform='translate3d('+rx+'px,'+ry+'px,0) translate(-50%,-50%)';
+  if(ringRun)requestAnimationFrame(ringLoop);}
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.transform='translate3d('+mx+'px,'+my+'px,0)';if(!ringRun){ringRun=true;requestAnimationFrame(ringLoop);}},{passive:true});
 function bindHovers(root){
   (root||document).querySelectorAll('a,button,.pc,.pfc,.ap-card,.svc,.p-card,.perk,.st').forEach(function(el){
-    el.addEventListener('mouseenter',function(){ring.style.width='54px';ring.style.height='54px';ring.style.borderColor='rgba(168,118,32,.75)';cur.style.transform='translate(-50%,-50%) scale(.35)';});
-    el.addEventListener('mouseleave',function(){ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(168,118,32,.35)';cur.style.transform='translate(-50%,-50%) scale(1)';});
+    el.addEventListener('mouseenter',function(){ring.style.width='54px';ring.style.height='54px';ring.style.borderColor='rgba(168,118,32,.75)';cur.style.scale='.35';});
+    el.addEventListener('mouseleave',function(){ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(168,118,32,.35)';cur.style.scale='1';});
   });
 }
 bindHovers(document);
@@ -2370,20 +2437,7 @@ function startHero(){
   var ph  = document.getElementById('p-home');
   nav.classList.add('over');
 
-  // Smooth scroll inertia
-  var scrollTarget=0,scrollCurrent=0,scrolling=false;
-  ph.addEventListener('wheel',function(e){
-    e.preventDefault();
-    scrollTarget=Math.max(0,Math.min(ph.scrollHeight-ph.clientHeight,scrollTarget+e.deltaY));
-    if(!scrolling){scrolling=true;smoothScroll();}
-  },{passive:false});
-  function smoothScroll(){
-    scrollCurrent+=(scrollTarget-scrollCurrent)*0.08;
-    if(Math.abs(scrollTarget-scrollCurrent)<0.5){scrollCurrent=scrollTarget;scrolling=false;}
-    ph.scrollTop=scrollCurrent;
-    if(scrolling)requestAnimationFrame(smoothScroll);
-  }
-  ph.addEventListener('scroll',function(){if(!scrolling)scrollTarget=ph.scrollTop;scrollCurrent=ph.scrollTop;},{passive:true});
+  // Native scrolling (the old wheel-hijack lerp fought trackpad momentum and caused stepping/jitter)
 
   gsap.timeline({delay:.04})
     .to('#hEy',     {opacity:1, y:0, duration:.7,  ease:'power2.out'})
@@ -2765,6 +2819,13 @@ function initST(container){
       }
     );
   }
+  // Award cards: gold light follows the pointer; one sheen sweep as each card lands
+  container.querySelectorAll('.man-aw').forEach(function(c,i){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px');});
+    ScrollTrigger.create({trigger:c,scroller:container,start:'top 85%',
+      onEnter:function(){c.classList.remove('shine');void c.offsetWidth;setTimeout(function(){c.classList.add('shine');},450+i*140);},
+      onLeaveBack:function(){c.classList.remove('shine');}});
+  });
   container.querySelectorAll('.svc').forEach(function(r,i){
     ScrollTrigger.create({trigger:r,scroller:container,start:'top 82%',
       onEnter:function(){
@@ -2824,6 +2885,10 @@ function initST(container){
     tlZoomIn.to(caOverlay,{opacity:0,ease:'none'},0);
     tlZoomIn.to(caName,{opacity:0,ease:'none'},0);
     tlZoomIn.to(caImgWrap,{scale:1.35,x:'10%',ease:'none'},0.1);
+
+    // Phase 3: photo dims into the same navy as Why Ceci before it slides over (no hard edge)
+    var caDim=caSection.querySelector('.ca-dim');
+    if(caDim){gsap.to(caDim,{opacity:1,ease:'none',scrollTrigger:{trigger:'.ceci-about',scroller:container,start:'52% top',end:'72% top',scrub:1}});}
   }
 
   // Why Ceci: pinned section with enter/exit animations
@@ -3719,7 +3784,7 @@ function initJoinPage(){
     if(su){su.style.opacity=ef;su.style.transform='translateY('+(-p*20)+'px)';}
     if(ct){ct.style.opacity=ef;ct.style.transform='translateY('+(-p*25)+'px)';}
     if(ov)ov.style.opacity=ease(range(p,0.10,0.35));
-    if(ti) ti.style.opacity=1-ease(range(p,0.82,0.96));
+    if(ti){var rc=ease(range(p,0.62,1));ti.style.opacity=1-rc*0.55;ti.style.transform='scale('+(1-rc*0.06)+')';ti.style.transformOrigin='0% 100%';}
   }});}
 
   /* ── Fly helper with in/out ── */
