@@ -374,6 +374,8 @@ nav:not(.glass-light) .nav-cta:hover{background:#fff;color:var(--gold);border-co
 .lst-hbtn-s{background:var(--gold);color:#fff;}
 .lst-hbtn-s:hover{background:var(--g2);}
 .lst-hbtn-g{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);}
+.lst-hbtn-film{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.lst-hbtn-film:hover{background:#fff;color:var(--ink);border-color:#fff;}
 .lst-hbtn-g:hover{background:#fff;color:var(--gold);border-color:#fff;}
 .lst-stats{display:flex;align-items:center;justify-content:space-between;padding:40px 80px;border-bottom:1px solid var(--ln);background:var(--w);}
 .lst-price{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--ink);}
@@ -955,6 +957,11 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 .jn-team-acc{display:flex;gap:4px;height:480px;overflow:hidden;border-radius:12px;}
 .jn-team-panel{position:relative;flex:0.25;overflow:hidden;cursor:pointer;transition:flex .7s cubic-bezier(.25,.46,.45,.94);border-radius:12px;min-width:0;}
 .jn-team-panel.active{flex:4;}
+.jn-roster{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:36px;border-top:1px solid var(--ln);}
+.jn-roster-p{padding:22px 18px 0 0;}
+.jn-roster-n{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--ink);line-height:1.2;}
+.jn-roster-n span{font-style:italic;color:var(--gold);}
+.jn-roster-r{margin-top:6px;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);}
 .jn-team-panel img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform 1s cubic-bezier(.25,.46,.45,.94);filter:brightness(.85);}
 .jn-team-panel.active img{filter:brightness(1);}
 .jn-team-panel:hover img{transform:scale(1.008);}
@@ -1197,6 +1204,11 @@ body.nav-open .logo-svg{color:#fff;filter:none;}
 /* About Ceci: tablet metrics, mobile monogram clear of the button */
 @media(max-width:1024px){.ca-metrics{gap:28px;}.ca-n{font-size:2rem;white-space:nowrap;}}
 @media(max-width:768px){.ca-name{display:none;}}
+/* Team roster */
+@media(max-width:1024px){.jn-roster{grid-template-columns:repeat(3,1fr);row-gap:18px;}}
+@media(max-width:640px){.jn-roster{grid-template-columns:1fr 1fr;}.jn-roster-n{font-size:1.15rem;}}
+/* Project sub-page: stack photos and details on phone */
+@media(max-width:768px){.lst-body{grid-template-columns:1fr;}.lst-about{order:-1;padding:40px 24px 8px;}.lst-about-sticky{position:static;}.lst-photos{padding:16px 24px 48px;}}
 </style>
 <script>
 /* Any image that fails to load falls back to an on-brand tile instead of a broken icon. */
@@ -1485,7 +1497,7 @@ window.addEventListener('DOMContentLoaded',function(){
       <div class="bsr-row-arrow">&rarr;</div>
     </div>
     <div class="bsr-row" data-page="enquire">
-      <div class="bsr-row-bg"><img src="assets/img/photo-1754531976828-69e42ce4e0d9-09b33c31.jpg" alt="" loading="lazy" decoding="async"/></div>
+      <div class="bsr-row-bg"><img src="assets/img/team-gala-1.jpg" alt="Ceci Lim Realty team" loading="lazy" decoding="async"/></div>
       <div class="bsr-row-num">4</div>
       <div class="bsr-row-text">
         <div class="bsr-row-tag">Consultation</div>
@@ -1612,12 +1624,12 @@ window.addEventListener('DOMContentLoaded',function(){
         <div class="man-aw-mark"><span class="man-aw-seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><linearGradient id="awGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dc9a"/><stop offset=".5" stop-color="#c8982a"/><stop offset="1" stop-color="#8a5e14"/></linearGradient><path id="awArc" d="M60 60 m-39.5 0 a39.5 39.5 0 1 1 79 0 a39.5 39.5 0 1 1 -79 0"/></defs><circle cx="60" cy="60" r="57" fill="url(#awGold)"/><circle cx="60" cy="60" r="50.5" fill="#0d1c36"/><circle cx="60" cy="60" r="47.5" fill="none" stroke="url(#awGold)" stroke-width=".7" opacity=".8"/><circle cx="60" cy="60" r="31" fill="none" stroke="url(#awGold)" stroke-width=".5" opacity=".55"/><text font-family="Jost,sans-serif" font-size="7" letter-spacing="2.6" fill="#e9cf8a"><textPath href="#awArc" startOffset="2%">PROPNEX MALAYSIA &#183; INDIVIDUAL PRODUCER &#183;</textPath></text><text x="60" y="64" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="28" font-style="italic" fill="#f0d790">Top</text><text x="60" y="80" text-anchor="middle" font-family="Jost,sans-serif" font-size="7.5" letter-spacing="3" fill="#e9cf8a">2025</text></svg></span></div>
         <div class="man-aw-body">
           <div class="man-aw-t">Top Individual <br>Producer</div>
-          <div class="man-aw-sub">PropNex Malaysia</div>
+          <div class="man-aw-sub">PropNex Top 200 &middot; 6th Nationwide</div>
           <div class="man-aw-yr">Honoured 2025</div>
         </div>
       </div>
     </div>
-    <p class="man-honours rv">Also honoured at PropNex for <em>top non-landed sales</em>, the <em>leading luxury project</em> and a <em>million&#8209;ringgit team</em>.</p>
+    <p class="man-honours rv">First place, <em>Top Luxury Project 2025</em> for Pavilion Square. A <em>PropNex Millionaire</em> with a <em>million&#8209;ringgit team</em> behind her, and featured in <em>EdgeProp&rsquo;s Realtors&rsquo; Roundtable</em>.</p>
     <div class="man-cta-row">
       <a href="#" class="btn-ink rv" data-page="enquire">Work With Ceci</a>
     </div>
@@ -1696,6 +1708,13 @@ window.addEventListener('DOMContentLoaded',function(){
         <div class="pover"></div>
         <div class="pinfo"><div class="ptag">Integrated Mixed-Use &middot; Damansara Heights</div><div class="pname">Pavilion<br>Damansara Heights</div><div class="pprice">Jalan Damanlela, Damansara Heights</div><div class="pdet-hover"><span class="pd-pill">Freehold</span><span class="pd-pill">Phase 1: 2023</span><span class="pd-pill">452 – 4,090 sqft</span></div></div>
       </div></div>
+      <div class="pc" onclick="openListing(6)" style="cursor:pointer;"><div class="pv" data-imgs="assets/img/tunku-01-exterior.jpg,assets/img/tunku-06-villa.jpg,assets/img/tunku-07-kitchen.jpg">
+        <div class="pv-dots"><span class="pv-dot active"></span><span class="pv-dot"></span><span class="pv-dot"></span></div>
+        <img src="assets/img/tunku-01-exterior.jpg" alt="Lagenda Tunku, Bukit Tunku" class="pc-layer" data-layer="a" style="z-index:1;" loading="lazy" decoding="async"/>
+        <img src="" alt="" class="pc-layer" data-layer="b" style="z-index:2;transform:translateX(100%);" loading="lazy" decoding="async"/>
+        <div class="pover"></div>
+        <div class="pinfo"><div class="ptag">Freehold Villas &middot; Bukit Tunku</div><div class="pname">Lagenda Tunku<br>Villa Gemilang</div><div class="pprice">26 Jalan Tunku, Bukit Tunku</div><div class="pdet-hover"><span class="pd-pill">Freehold</span><span class="pd-pill">7 Villas</span><span class="pd-pill">11,260 – 13,272 sqft</span></div></div>
+      </div></div>
       </div>
       <div class="ls-nav">
         <button class="ls-arrow" id="lsLeft" aria-label="Previous">&larr;</button>
@@ -1728,7 +1747,7 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 
 <div class="cta-banner">
-  <div class="cta-banner-bg"><img src="assets/img/photo-1754531976828-69e42ce4e0d9-922d2aea.jpg" alt="" loading="lazy" decoding="async"/></div>
+  <div class="cta-banner-bg"><img src="assets/img/team-gala-3.jpg" alt="Ceci Lim and team at the National Real Estate Awards 2026" loading="lazy" decoding="async"/></div>
   <div class="cta-banner-inner">
     <h2 class="rv">Build Your Career<br>With <em>Ceci Lim</em></h2>
     <span class="rv" style="font-size:.78rem;letter-spacing:.44em;text-transform:uppercase;color:var(--gp);">Join Malaysia's Leading Luxury Team</span>
@@ -1947,7 +1966,7 @@ window.addEventListener('DOMContentLoaded',function(){
   </div>
 </div>
 <script>
-function openJnVidModal(){var m=document.getElementById('jnVidModal');var v=document.getElementById('jnVidModalVideo');if(!m||!v)return;m.classList.add('open');v.currentTime=0;v.muted=false;var p=v.play();if(p&&p.catch)p.catch(function(){});document.body.style.overflow='hidden';}
+function openJnVidModal(src,poster){var m=document.getElementById('jnVidModal');var v=document.getElementById('jnVidModalVideo');if(!m||!v)return;var want=(typeof src==='string'&&src)?src:'assets/video/team-recruitment.mp4';var so=v.querySelector('source');if(so&&so.getAttribute('src')!==want){so.setAttribute('src',want);v.poster=(typeof poster==='string'&&poster)?poster:'assets/img/team-hero-poster.jpg';v.load();}m.classList.add('open');v.currentTime=0;v.muted=false;var p=v.play();if(p&&p.catch)p.catch(function(){});document.body.style.overflow='hidden';}
 function closeJnVidModal(){var m=document.getElementById('jnVidModal');var v=document.getElementById('jnVidModalVideo');if(!m||!v)return;m.classList.remove('open');v.pause();document.body.style.overflow='';}
 document.addEventListener('click',function(e){var b=e.target.closest('#jnHeroPlay');if(b){e.preventDefault();openJnVidModal();}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnVidModal();});
@@ -1993,7 +2012,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnVidMo
       <span class="pt-hero-h1-wrap"><span class="pt-hero-h1-line">Succeed Together.</span></span>
       <span class="pt-hero-h1-wrap"><span class="pt-hero-h1-line">Partner <em>with Ceci</em></span></span>
     </h1>
-    <div class="pt-hero-img"><img src="assets/img/photo-1754531976828-69e42ce4e0d9-09b33c31.jpg" alt="" loading="lazy" decoding="async"/></div>
+    <div class="pt-hero-img"><img src="assets/img/team-studio-2.jpg" alt="Ceci Lim with her team" style="object-position:center 14%;" loading="lazy" decoding="async"/></div>
   </div>
 
   <!-- What Clients Say -->
@@ -2135,7 +2154,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnVidMo
 
   <!-- Final CTA — Partner With Us -->
   <div class="cta-banner">
-    <div class="cta-banner-bg"><img src="assets/img/photo-1600607687939-ce8a6c25118c-42018fec.jpg" alt="" loading="lazy" decoding="async"/></div>
+    <div class="cta-banner-bg"><img src="assets/img/tunku-01-exterior.jpg" alt="Lagenda Tunku, Bukit Tunku" loading="lazy" decoding="async"/></div>
     <div class="cta-banner-inner">
       <h2 class="rv">Let's Build<br><em style="color:var(--gp);">Together</em></h2>
       <span class="rv" style="font-size:.78rem;letter-spacing:.44em;text-transform:uppercase;color:var(--gp);">For Developers, Agencies &amp; Bulk Investors</span>
@@ -2213,10 +2232,17 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnVidMo
       </div>
     </div>
     <div class="jn-team-acc">
-      <div class="jn-team-panel active" data-idx="0"><img src="assets/img/team-01.jpg" alt="Team" loading="lazy" decoding="async"/></div>
-      <div class="jn-team-panel" data-idx="1"><img src="assets/img/team-02.jpg" alt="Team" loading="lazy" decoding="async"/></div>
-      <div class="jn-team-panel" data-idx="2"><img src="assets/img/team-03.jpg" alt="Team" loading="lazy" decoding="async"/></div>
-      <div class="jn-team-panel" data-idx="3"><img src="assets/img/team-04.jpg" alt="Team" loading="lazy" decoding="async"/></div>
+      <div class="jn-team-panel active" data-idx="0"><img src="assets/img/team-studio-1.jpg" alt="Ceci Lim Realty team" loading="lazy" decoding="async"/></div>
+      <div class="jn-team-panel" data-idx="1"><img src="assets/img/team-studio-2.jpg" alt="Ceci Lim with her team" loading="lazy" decoding="async"/></div>
+      <div class="jn-team-panel" data-idx="2"><img src="assets/img/team-gala-2.jpg" alt="The team at the National Real Estate Awards 2026" loading="lazy" decoding="async"/></div>
+      <div class="jn-team-panel" data-idx="3"><img src="assets/img/team-gala-4.jpg" alt="Celebrating at the National Real Estate Awards 2026" loading="lazy" decoding="async"/></div>
+    </div>
+    <div class="jn-roster">
+      <div class="jn-roster-p"><div class="jn-roster-n">Chan Kah Ying</div><div class="jn-roster-r">Team Leader</div></div>
+      <div class="jn-roster-p"><div class="jn-roster-n">Koh Xue Yee</div><div class="jn-roster-r">Team Leader</div></div>
+      <div class="jn-roster-p"><div class="jn-roster-n">Ong Han Wei <span>(Stephen)</span></div><div class="jn-roster-r">Team Leader</div></div>
+      <div class="jn-roster-p"><div class="jn-roster-n">Chow Wei Kheng</div><div class="jn-roster-r">Senior Negotiator</div></div>
+      <div class="jn-roster-p"><div class="jn-roster-n">Lau Pei Yee <span>(Jodie)</span></div><div class="jn-roster-r">Senior Negotiator</div></div>
     </div>
     <div style="display:flex;justify-content:flex-end;margin-top:40px;">
       <a href="#" class="jn-section-cta" data-page="enquire">Join Us <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -2279,7 +2305,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnVidMo
 
   <!-- CTA -->
   <div class="cta-banner">
-    <div class="cta-banner-bg"><img src="assets/img/photo-1545324418-cc1a3fa10c00-df17147a.jpg" alt="" loading="lazy" decoding="async"/></div>
+    <div class="cta-banner-bg"><img src="assets/img/team-gala-pano.jpg" alt="Ceci Lim and team at the National Real Estate Awards 2026" loading="lazy" decoding="async"/></div>
     <div class="cta-banner-inner">
       <h2 class="rv">Ready to Shape<br>Your <em style="color:var(--gp);">Legacy?</em></h2>
       <span class="rv" style="font-size:.78rem;letter-spacing:.44em;text-transform:uppercase;color:var(--gp);">Your Next Chapter Starts Here</span>
@@ -3145,6 +3171,43 @@ var LISTING_DATA=[
       "assets/img/Image8-893x1024-4edcf837.webp",
       "assets/img/TheSky-e0c91996.jpg"
     ]
+  },
+  {
+    id:6,
+    name:"Lagenda Tunku<br>Villa Gemilang",
+    badge:"Freehold Villas · Bukit Tunku",
+    neighborhood:"Bukit Tunku",
+    address:"No. 26, Jalan Tunku, Bukit Tunku, 50480 Kuala Lumpur",
+    developer:"Mount Well",
+    priceLabel:"Available upon request",
+    tenure:"Freehold",
+    completion:"Completed",
+    totalUnits:"7 bespoke villas",
+    floors:"3 – 4 storeys",
+    bedroomsRange:"5+",
+    bathroomsRange:"5+",
+    sqftRange:"11,260 – 13,272",
+    features:["Only 7 Villas","Freehold Land 10,201 – 15,000 sqft","Private Pool","Personal Lift","Parking for up to 8 Cars","Two Tranquil Courtyards","Personal Bar & Multi-Function Room","Rooftop Terrace","KLCC Skyline Views","Gated & Guarded Enclave"],
+    description:[
+      "Lagenda Tunku is a gated enclave of only seven freehold villas on Jalan Tunku, set among the old trees of Bukit Tunku, one of Kuala Lumpur&rsquo;s most private addresses, with the KLCC skyline in full view. Each villa is named rather than numbered, from Obsedian to Platinum, and none is quite like the next.",
+      "Rising three to four storeys over 11,260 to 13,272 sqft of built-up space, every home has its own pool, a personal lift, a private bar and parking for up to eight cars, arranged around two quiet courtyards. Ceci represents the collection personally; viewings are by private appointment."
+    ],
+    mapQuery:"26+Jalan+Tunku+Bukit+Tunku+Kuala+Lumpur",
+    nearbyPoints:["Bukit Tunku, minutes from KLCC","Near Taman Tugu & Perdana Botanical Gardens","Quick access to Jalan Duta & Jalan Parlimen"],
+    externalUrl:"",
+    video:"assets/video/tunku-film.mp4",
+    videoTour:"assets/video/tunku-home-tour.mp4",
+    heroImg:"assets/img/tunku-01-exterior.jpg",
+    thumb2:"assets/img/tunku-06-villa.jpg",
+    thumb3:"assets/img/tunku-07-kitchen.jpg",
+    gallery:[
+      "assets/img/tunku-02-aerial.jpg",
+      "assets/img/tunku-08-lounge.jpg",
+      "assets/img/tunku-10-dining.jpg",
+      "assets/img/tunku-09-view.jpg",
+      "assets/img/tunku-11-bedroom.jpg",
+      "assets/img/tunku-03-living.jpg"
+    ]
   }
 ];
 
@@ -3558,11 +3621,15 @@ function openListing(id){
     });
     // Hero & bottom CTA buttons — Enquire + Official Site
     var heroCtaGroup=pg.querySelector('.lst-hero-cta-group');
-    if(heroCtaGroup)heroCtaGroup.innerHTML='<button class="lst-hbtn lst-hbtn-s" onclick="goTo(\'enquire\')">Enquire / Schedule →</button>';
+    var playSvg='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg>';
+    var filmBtns=(d.video?'<button class="lst-hbtn lst-hbtn-film" onclick="openJnVidModal(\''+d.video+'\',\''+d.heroImg+'\')">'+playSvg+' Watch the Film</button>':'')
+      +(d.videoTour?'<button class="lst-hbtn lst-hbtn-film" onclick="openJnVidModal(\''+d.videoTour+'\',\''+d.thumb2+'\')">'+playSvg+' Home Tour</button>':'');
+    if(heroCtaGroup)heroCtaGroup.innerHTML='<button class="lst-hbtn lst-hbtn-s" onclick="goTo(\'enquire\')">Enquire / Schedule →</button>'+filmBtns;
     var heroCtaOuter=pg.querySelector('.lst-hero-cta');
     if(heroCtaOuter){
       var extraBtn=heroCtaOuter.querySelector('.lst-hbtn-g');
-      if(extraBtn){
+      if(extraBtn)extraBtn.style.display=d.externalUrl?'':'none';
+      if(extraBtn&&d.externalUrl){
         extraBtn.setAttribute('onclick',"window.open('"+d.externalUrl+"','_blank')");
         extraBtn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg> View Official Site';
       }
@@ -3570,7 +3637,7 @@ function openListing(id){
     var bottomCta=pg.querySelector('.lst-cta-btns-all');
     if(bottomCta)bottomCta.innerHTML=
       '<button class="lst-hbtn lst-hbtn-s" onclick="goTo(\'enquire\')">Enquire Now →</button>'+
-      '<button class="lst-hbtn lst-hbtn-g" onclick="window.open(\''+d.externalUrl+'\',\'_blank\')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg> View Official Site</button>';
+      (d.externalUrl?'<button class="lst-hbtn lst-hbtn-g" onclick="window.open(\''+d.externalUrl+'\',\'_blank\')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg> View Official Site</button>':'');
   }
   goTo('listing');
   setTimeout(function(){
