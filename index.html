@@ -4186,29 +4186,54 @@ function initJoinPage(){
 
 </script>
 <script>
-/* Step-up video quality: loops start on the light file, then switch to the full-quality
-   file once it has fully downloaded in the background. The switch happens as the loop
-   wraps to its first frame (which matches the poster), so there is no visible jump.
-   Slow / data-saver connections and small screens keep the light file. */
+/* Step-up video quality. Loops start on the light file so the page opens fast. As soon as
+   that is playing, the full-quality file downloads in the background; when it is ready an
+   HD copy is laid exactly over the light one, synced to the same moment, and cross-faded in
+   over a second. Data-saver, 2G/3G and slow connections keep the light file. */
 (function(){
+  function once(el,ev,fn){el.addEventListener(ev,function h(e){el.removeEventListener(ev,h);fn(e);});}
+  function crossfade(v,url){
+    var h=document.createElement('video');
+    h.muted=true;h.defaultMuted=true;h.setAttribute('muted','');h.setAttribute('playsinline','');h.playsInline=true;
+    h.loop=true;h.preload='auto';h.setAttribute('aria-hidden','true');
+    h.className=v.className;h.style.cssText=v.style.cssText;
+    h.style.position='absolute';h.style.left='0';h.style.top='0';h.style.opacity='0';h.style.transition='opacity 1s ease';
+    h.src=url;
+    v.parentNode.insertBefore(h,v.nextSibling);
+    var shown=false;
+    function show(){
+      if(shown)return;shown=true;
+      requestAnimationFrame(function(){h.style.opacity='1';});
+      setTimeout(function(){
+        if(v.id){var id=v.id;v.removeAttribute('id');h.id=id;}
+        h.removeAttribute('aria-hidden');
+        try{v.pause();}catch(e){}
+        if(v.parentNode)v.parentNode.removeChild(v);
+      },1150);
+    }
+    function go(){var p=h.play();if(p&&p.then)p.then(function(){once(h,'timeupdate',show);},function(){show();});else once(h,'timeupdate',show);setTimeout(show,1500);}
+    once(h,'loadeddata',function(){
+      var d=h.duration||0,t=v.currentTime||0;
+      if(d&&t){var target=(t+0.12)%d;var done=false;once(h,'seeked',function(){done=true;go();});try{h.currentTime=target;}catch(e){go();}setTimeout(function(){if(!done)go();},700);}
+      else go();
+    });
+  }
   function stepUp(v){
     var hq=v.getAttribute('data-hq');
     if(!hq||v._hq||!window.fetch||!window.URL||!canHQ())return;
     v._hq=true;
-    fetch(hq).then(function(r){if(!r.ok)throw new Error(r.status);return r.blob();}).then(function(blob){
-      var url=URL.createObjectURL(blob),done=false,last=0;
-      function swap(){
-        if(done)return;done=true;v.removeEventListener('timeupdate',onT);
-        var so=v.querySelector('source');if(so)so.parentNode.removeChild(so);
-        v.src=url;v.muted=true;v.loop=true;
-        var p=v.play();if(p&&p.catch)p.catch(function(){});
-      }
-      function onT(){if(v.currentTime+0.25<last)swap();last=v.currentTime;}
-      if(v.paused||v.readyState<2)swap();else v.addEventListener('timeupdate',onT);
-    }).catch(function(){v._hq=false;});
+    fetch(hq).then(function(r){if(!r.ok)throw new Error(r.status);return r.blob();})
+      .then(function(blob){crossfade(v,URL.createObjectURL(blob));})
+      .catch(function(){v._hq=false;});
   }
-  function start(){document.querySelectorAll('video[data-hq]').forEach(function(v,i){setTimeout(function(){stepUp(v);},1200+i*1500);});}
-  if(document.readyState==='complete')start();else window.addEventListener('load',start);
+  function arm(v,i){
+    var fired=false;
+    function fire(){if(fired)return;fired=true;setTimeout(function(){stepUp(v);},i*600);}
+    if(v.readyState>=3)fire();else{v.addEventListener('canplaythrough',fire);v.addEventListener('playing',fire);}
+    setTimeout(fire,2500+i*600);
+  }
+  function start(){document.querySelectorAll('video[data-hq]').forEach(arm);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
 </body>
