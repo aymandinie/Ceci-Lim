@@ -530,6 +530,9 @@ nav:not(.glass-light) .nav-cta:hover{background:#fff;color:var(--gold);border-co
 .jn-vid-modal-inner{position:relative;width:100%;max-width:1200px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 40px 140px rgba(0,0,0,.6);}
 .jn-vid-modal-inner video{width:100%;height:100%;object-fit:contain;background:#000;display:block;}
 .jn-vid-modal-close{position:absolute;top:-50px;right:-2px;background:transparent;border:none;color:#fff;font-size:2rem;cursor:pointer;padding:6px 12px;line-height:1;transition:color .3s,transform .3s;}
+.jn-vid-q{position:absolute;top:-46px;right:52px;background:transparent;border:1px solid rgba(255,255,255,.35);color:rgba(255,255,255,.8);font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:.2em;padding:6px 12px;border-radius:20px;cursor:pointer;transition:all .3s;}
+.jn-vid-q.is-hd{border-color:var(--gp);color:var(--gp);}
+.jn-vid-q:hover{background:#fff;color:var(--ink);border-color:#fff;}
 .jn-vid-modal-close:hover{color:var(--gp);transform:rotate(90deg);}
 .join-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,21,32,.95),rgba(10,21,32,.25));}
 .join-hero-content{position:relative;z-index:1;padding:60px;}
@@ -964,7 +967,7 @@ footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:
 .jn-roster-r{margin-top:6px;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);}
 .jn-team-panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block;transition:transform 1s cubic-bezier(.25,.46,.45,.94),opacity .6s ease;filter:brightness(.85);}
 .jn-team-panel .jn-team-bgimg{filter:blur(28px) brightness(.7) saturate(1.1);transform:scale(1.2);opacity:0;}
-.jn-team-panel.active .jn-team-bgimg{opacity:1;}
+.jn-team-panel.active .jn-team-bgimg,.jn-team-panel.active img.jn-team-bgimg{opacity:1;filter:blur(36px) saturate(1.05);transform:scale(1.25);}
 .jn-team-panel.active .jn-team-img{object-fit:contain;filter:none;}
 .jn-team-zoom{position:absolute;right:18px;bottom:18px;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:30px;background:rgba(10,20,30,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:opacity .4s ease .35s,transform .4s ease .35s;pointer-events:none;}
 .jn-team-panel.active .jn-team-zoom{opacity:1;transform:none;}
@@ -1349,7 +1352,7 @@ window.addEventListener('DOMContentLoaded',function(){
 <div id="hL2" style="position:absolute;top:-20%;left:50%;width:100%;height:150%;
            will-change:transform;pointer-events:none;transform:translateX(-50%);
            transform-origin:center bottom;">
-        <video autoplay muted loop playsinline preload="auto" poster="assets/img/hero-tunku-poster.jpg" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.1);"><source src="assets/video/hero-tunku.mp4" type="video/mp4"/></video>
+        <video autoplay muted loop playsinline preload="auto" data-hq="assets/video/hero-tunku-hd.mp4" poster="assets/img/hero-tunku-poster.jpg" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.1);"><source src="assets/video/hero-tunku.mp4" type="video/mp4"/></video>
       </div>
 <div id="hL3" style="position:absolute;bottom:0;left:0;right:0;height:45%;
            pointer-events:none;will-change:transform;">
@@ -1809,7 +1812,7 @@ window.addEventListener('DOMContentLoaded',function(){
         <source src="assets/video/team-recruitment.mp4" type="video/mp4"/>
         Your browser does not support the video tag.
       </video>
-      <div id="founderPlayOverlay" onclick="var v=document.getElementById('founderVideo');v.play();this.style.opacity='0';this.style.pointerEvents='none';" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,.15));transition:opacity .3s;">
+      <div id="founderPlayOverlay" onclick="var v=document.getElementById('founderVideo');if(window.vidPick){var so=v.querySelector('source'),w=vidPick('assets/video/team-recruitment.mp4');if(so&&so.getAttribute('src')!==w){so.setAttribute('src',w);v.load();}}v.play();this.style.opacity='0';this.style.pointerEvents='none';" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,.15));transition:opacity .3s;">
         <div style="width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;transition:transform .3s,background .3s;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5z" fill="#fff"/></svg>
         </div>
@@ -2033,13 +2036,24 @@ window.addEventListener('DOMContentLoaded',function(){
 <div class="jn-vid-modal" id="jnVidModal" onclick="if(event.target===this)closeJnVidModal();">
   <div class="jn-vid-modal-inner">
     <button class="jn-vid-modal-close" onclick="closeJnVidModal()" aria-label="Close">&times;</button>
+    <button class="jn-vid-q" id="jnVidQ" type="button" onclick="toggleVidQuality()" aria-label="Switch video quality">HD</button>
     <video id="jnVidModalVideo" controls playsinline preload="none" poster="assets/img/team-hero-poster.jpg">
       <source src="assets/video/team-recruitment.mp4" type="video/mp4"/>
     </video>
   </div>
 </div>
 <script>
-function openJnVidModal(src,poster){var m=document.getElementById('jnVidModal');var v=document.getElementById('jnVidModalVideo');if(!m||!v)return;var want=(typeof src==='string'&&src)?src:'assets/video/team-recruitment.mp4';var so=v.querySelector('source');if(so&&so.getAttribute('src')!==want){so.setAttribute('src',want);v.poster=(typeof poster==='string'&&poster)?poster:'assets/img/team-hero-poster.jpg';v.load();}m.classList.add('open');v.currentTime=0;v.muted=false;var p=v.play();if(p&&p.catch)p.catch(function(){});document.body.style.overflow='hidden';}
+var VID_HD={'assets/video/team-recruitment.mp4':'assets/video/team-recruitment-hd.mp4','assets/video/tunku-film.mp4':'assets/video/tunku-film-hd.mp4','assets/video/tunku-home-tour.mp4':'assets/video/tunku-home-tour-hd.mp4'};
+var VID_SD={};for(var _k in VID_HD)VID_SD[VID_HD[_k]]=_k;
+function canHQ(){
+  var c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  if(c){if(c.saveData)return false;if(/(^|-)(2g|3g)$/.test(c.effectiveType||''))return false;if(c.downlink&&c.downlink<3)return false;}
+  return Math.max(screen.width,screen.height)*(window.devicePixelRatio||1)>=1280;
+}
+function vidPick(sd){return (canHQ()&&VID_HD[sd])?VID_HD[sd]:sd;}
+function _syncVidQ(){var b=document.getElementById('jnVidQ'),v=document.getElementById('jnVidModalVideo');if(!b||!v)return;var so=v.querySelector('source');var src=so?so.getAttribute('src'):'';var hd=!!VID_SD[src];b.textContent=hd?'HD':'SD';b.classList.toggle('is-hd',hd);b.style.display=(VID_HD[src]||VID_SD[src])?'':'none';}
+function toggleVidQuality(){var v=document.getElementById('jnVidModalVideo');if(!v)return;var so=v.querySelector('source');if(!so)return;var src=so.getAttribute('src');var next=VID_SD[src]||VID_HD[src];if(!next)return;var t=v.currentTime,playing=!v.paused;so.setAttribute('src',next);v.load();v.addEventListener('loadedmetadata',function f(){v.removeEventListener('loadedmetadata',f);try{v.currentTime=t;}catch(e){}if(playing){var p=v.play();if(p&&p.catch)p.catch(function(){});}});v.addEventListener('canplay',function g(){v.removeEventListener('canplay',g);if(t>1&&Math.abs(v.currentTime-t)>1){try{v.currentTime=t;}catch(e){}}});_syncVidQ();}
+function openJnVidModal(src,poster){var m=document.getElementById('jnVidModal');var v=document.getElementById('jnVidModalVideo');if(!m||!v)return;var want=vidPick((typeof src==='string'&&src)?src:'assets/video/team-recruitment.mp4');var so=v.querySelector('source');if(so&&so.getAttribute('src')!==want){so.setAttribute('src',want);v.poster=(typeof poster==='string'&&poster)?poster:'assets/img/team-hero-poster.jpg';v.load();}m.classList.add('open');_syncVidQ();v.currentTime=0;v.muted=false;var p=v.play();if(p&&p.catch)p.catch(function(){});document.body.style.overflow='hidden';}
 function openJnLightbox(src,alt){var l=document.getElementById('jnLightbox'),i=document.getElementById('jnLightboxImg');if(!l||!i)return;i.src=src;i.alt=alt||'';l.classList.add('open');}
 function closeJnLightbox(){var l=document.getElementById('jnLightbox');if(l)l.classList.remove('open');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnLightbox();});
@@ -2256,7 +2270,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeJnVidMo
     <div class="jn-hero">
       <div class="join-hero-bg" id="jnHeroBg">
         <!-- Preview plays silently on loop; click the play button to open the full video in a modal. Swap these sources with the Aspial team-recruitment shoot when delivered. -->
-        <video id="jnHeroVid" autoplay muted loop playsinline preload="auto" poster="assets/img/team-hero-poster.jpg">
+        <video id="jnHeroVid" autoplay muted loop playsinline preload="auto" data-hq="assets/video/team-hero-loop-hd.mp4" poster="assets/img/team-hero-poster.jpg">
           <source src="assets/video/team-hero-loop.mp4" type="video/mp4"/>
         </video>
         <button type="button" class="jn-hero-playbtn" id="jnHeroPlay" aria-label="Watch recruitment video">
@@ -2727,13 +2741,13 @@ function goTo(target){
       gsap.to(wl,{opacity:0,duration:.2,ease:'power2.in'});
       gsap.to(wipe,{scaleY:0,transformOrigin:'top center',duration:.4,ease:'power3.out',onComplete:function(){
         wipe.style.pointerEvents='none';
-        if(window._navUpdate)window._navUpdate();
+        if(window._navUpdate)window._navUpdate(true);
       }});
       /* Fire init immediately — animations start as wipe reveals */
       if(target==='listing') initListingAnimations();
       if(target==='join') initJoinPage();
       if(target==='partners') initPartnersPage();
-      setTimeout(function(){if(window._navUpdate)window._navUpdate();
+      setTimeout(function(){if(window._navUpdate)window._navUpdate(true);
         if(target==='partners'||target==='enquire'){var n=document.getElementById('nav');if(n){n.classList.remove('glass-dark','over');n.classList.add('glass-light');}}
       },60);
     },400);
@@ -2839,7 +2853,7 @@ function initReviewCarousel(){
 
 function initDynamicNav(){
   var navEl=document.getElementById('nav');
-  var ticking=false,curTheme=null;
+  var ticking=false,curTheme=null,pendingT=null,pendingAt=0,forceNext=false;
   function sRGB(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}
   function lum(r,g,b){return 0.2126*sRGB(r)+0.7152*sRGB(g)+0.0722*sRGB(b);}
   function parseBg(str){
@@ -2854,9 +2868,10 @@ function initDynamicNav(){
       var r=img.getBoundingClientRect();
       var px=(x-r.left)/r.width*img.naturalWidth;
       var py=(y-r.top)/r.height*img.naturalHeight;
-      var c=document.createElement('canvas');c.width=1;c.height=1;
-      var ctx=c.getContext('2d');
-      ctx.drawImage(img,px,py,1,1,0,0,1,1);
+      var c=window._navCv||(window._navCv=document.createElement('canvas'));c.width=1;c.height=1;
+      var ctx=c.getContext('2d',{willReadFrequently:true});
+      var sw=Math.max(1,r.width>0?img.naturalWidth*40/r.width:1),sh=Math.max(1,r.height>0?img.naturalHeight*14/r.height:1);
+      ctx.drawImage(img,Math.max(0,px-sw/2),Math.max(0,py-sh/2),sw,sh,0,0,1,1);
       var d=ctx.getImageData(0,0,1,1).data;
       return[d[0],d[1],d[2]];
     }catch(e){return null;}
@@ -2883,8 +2898,16 @@ function initDynamicNav(){
     ticking=false;
     var sy=navEl.offsetHeight+2,w=window.innerWidth;
     var dark=0;
-    [w*0.2,w*0.5,w*0.8].forEach(function(sx){if(themeAt(sx,sy)==='dark')dark++;});
-    var t=dark>=2?'dark':'light';
+    [w*0.1,w*0.3,w*0.5,w*0.7,w*0.9].forEach(function(sx){if(themeAt(sx,sy)==='dark')dark++;});
+    var t=dark>=3?'dark':'light';
+    var now=Date.now(),isNow=navEl.classList.contains(t==='light'?'glass-light':'glass-dark');
+    if(isNow){pendingT=null;}
+    else if(!forceNext){
+      /* only switch once the new reading has held ~150ms: no strobing at section edges */
+      if(pendingT!==t){pendingT=t;pendingAt=now;setTimeout(schedule,170);return;}
+      if(now-pendingAt<150){setTimeout(schedule,170);return;}
+    }
+    forceNext=false;pendingT=null;
     /* compare with the class actually on the nav: page changes set it directly */
     if(!navEl.classList.contains(t==='light'?'glass-light':'glass-dark')||navEl.classList.contains(t==='light'?'glass-dark':'glass-light')){
       curTheme=t;
@@ -2896,7 +2919,7 @@ function initDynamicNav(){
   document.querySelectorAll('.page').forEach(function(p){
     p.addEventListener('scroll',schedule,{passive:true});
   });
-  window._navUpdate=schedule;
+  window._navUpdate=function(force){if(force)forceNext=true;schedule();};
   schedule();
 }
 
@@ -3778,14 +3801,6 @@ function initPartnersPage(){
   ScrollTrigger.getAll().forEach(function(t){if(t.vars&&t.vars.scroller===pg)t.kill();});
   var navEl=document.getElementById('nav');
   if(navEl){navEl.classList.remove('glass-dark','over');navEl.classList.add('glass-light');}
-  /* Keep nav glass-light when in hero area (beige/white bg) */
-  pg.addEventListener('scroll',function(){
-    if(pg.scrollTop<window.innerHeight){
-      navEl.classList.remove('glass-dark','over');
-      navEl.classList.add('glass-light');
-    }
-  });
-
   /* Hero word reveal */
   var hLines=pg.querySelectorAll('.pt-hero-h1-line');
   gsap.set(hLines,{y:'110%'});
@@ -3797,16 +3812,21 @@ function initPartnersPage(){
   /* Hero parallax: image moves up slower, text fades */
   var heroImg=pg.querySelector('.pt-hero-img');
   var heroH1=pg.querySelector('.pt-hero-h1');
-  pg.addEventListener('scroll',function(){
-    var st=pg.scrollTop;
-    var vh=window.innerHeight;
-    if(heroImg) heroImg.style.transform='translateY('+(-st*0.45)+'px)';
-    if(heroH1){
-      var fade=Math.max(0,1-st/(vh*0.35));
-      heroH1.style.opacity=fade;
-      heroH1.style.transform='translateY('+(-st*0.18)+'px)';
-    }
-  });
+  if(!pg._ptParallax){
+    pg._ptParallax=true;
+    var ptTick=false;
+    pg.addEventListener('scroll',function(){
+      if(ptTick)return;ptTick=true;
+      requestAnimationFrame(function(){
+        ptTick=false;
+        var st=pg.scrollTop,vh=window.innerHeight;
+        var hi=pg.querySelector('.pt-hero-img'),hh=pg.querySelector('.pt-hero-h1');
+        /* through GSAP so it shares the transform with the entrance animation instead of fighting it */
+        if(hi)gsap.set(hi,{y:-st*0.45,force3D:true});
+        if(hh)gsap.set(hh,{y:-st*0.18,opacity:Math.max(0,1-st/(vh*0.35)),force3D:true});
+      });
+    },{passive:true});
+  }
 
   /* Fly helper with PROPER cleanup */
   function fly(sel,tgts){
@@ -4011,7 +4031,7 @@ function initJoinPage(){
   var panels=pg.querySelectorAll('.jn-team-panel');
   var teamAcc=pg.querySelector('.jn-team-acc');
   var canHover=window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  panels.forEach(function(panel){
+  if(!pg._jnTeam)panels.forEach(function(panel){
     if(canHover)panel.addEventListener('mouseenter',function(){
       panels.forEach(function(p){p.classList.remove('active');});
       panel.classList.add('active');
@@ -4022,10 +4042,11 @@ function initJoinPage(){
       var im=panel.querySelector('.jn-team-img');if(im)openJnLightbox(im.currentSrc||im.src,im.alt);
     });
   });
-  if(teamAcc&&canHover){teamAcc.addEventListener('mouseleave',function(){
+  if(teamAcc&&canHover&&!pg._jnTeam){teamAcc.addEventListener('mouseleave',function(){
     panels.forEach(function(p){p.classList.remove('active');});
     panels[0].classList.add('active');
   });}
+  pg._jnTeam=true;
 
   gsap.set(['.jn-team-lbl','.jn-team-h','.jn-team .jn-section-cta'],{opacity:0,y:28});
   gsap.set('.jn-team-acc',{opacity:0,y:50,scale:.97});
@@ -4163,6 +4184,32 @@ function initJoinPage(){
   setTimeout(function(){ScrollTrigger.refresh();},60);
 }
 
+</script>
+<script>
+/* Step-up video quality: loops start on the light file, then switch to the full-quality
+   file once it has fully downloaded in the background. The switch happens as the loop
+   wraps to its first frame (which matches the poster), so there is no visible jump.
+   Slow / data-saver connections and small screens keep the light file. */
+(function(){
+  function stepUp(v){
+    var hq=v.getAttribute('data-hq');
+    if(!hq||v._hq||!window.fetch||!window.URL||!canHQ())return;
+    v._hq=true;
+    fetch(hq).then(function(r){if(!r.ok)throw new Error(r.status);return r.blob();}).then(function(blob){
+      var url=URL.createObjectURL(blob),done=false,last=0;
+      function swap(){
+        if(done)return;done=true;v.removeEventListener('timeupdate',onT);
+        var so=v.querySelector('source');if(so)so.parentNode.removeChild(so);
+        v.src=url;v.muted=true;v.loop=true;
+        var p=v.play();if(p&&p.catch)p.catch(function(){});
+      }
+      function onT(){if(v.currentTime+0.25<last)swap();last=v.currentTime;}
+      if(v.paused||v.readyState<2)swap();else v.addEventListener('timeupdate',onT);
+    }).catch(function(){v._hq=false;});
+  }
+  function start(){document.querySelectorAll('video[data-hq]').forEach(function(v,i){setTimeout(function(){stepUp(v);},1200+i*1500);});}
+  if(document.readyState==='complete')start();else window.addEventListener('load',start);
+})();
 </script>
 </body>
 </html>
