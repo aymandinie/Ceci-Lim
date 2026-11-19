@@ -19,8 +19,8 @@
 <meta name="twitter:title" content="Ceci Lim — Senior Negotiator, PropNex Realty KLCC"/>
 <meta name="twitter:description" content="KLCC luxury property advisory — buying, selling, leasing and investment strategy."/>
 <meta name="twitter:image" content="ceci_opt.jpg"/>
-<link rel="preload" as="image" href="assets/img/hero-tunku-poster.jpg"/>
-<link rel="preload" as="video" href="assets/video/hero-tunku.mp4" type="video/mp4"/>
+<link rel="preload" as="image" href="assets/img/hero-tunku-poster.jpg?v=3"/>
+<link rel="preload" as="video" href="assets/video/hero-tunku.mp4?v=3" type="video/mp4"/>
 <link href="assets/fonts/fonts.css" rel="stylesheet"/>
 <script src="assets/vendor/gsap.min.js"></script>
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
@@ -1191,6 +1191,7 @@ nav:not(.glass-light) .nav-cta{background:rgba(10,20,30,.42);border-color:rgba(2
 #hL4::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(ellipse 72% 58% at 50% 46%,rgba(6,14,22,.60) 0%,rgba(6,14,22,.36) 45%,rgba(6,14,22,0) 78%);}
 #hEy,#hH1,#hBtns{position:relative;z-index:1;}
+@media(max-width:520px){#hBtns{flex-direction:column;align-items:center;gap:12px;margin-top:28px!important;}#hBtns .hb{min-width:236px;justify-content:center;white-space:nowrap;padding:14px 28px;font-size:.74rem;letter-spacing:.22em;}}
 
 /* Drawer open: lift the nav above the drawer so the close (X) button stays tappable. */
 body.nav-open nav{z-index:120;background:transparent;background-image:none;
@@ -1349,10 +1350,10 @@ window.addEventListener('DOMContentLoaded',function(){
           #5e94b0 82%,
           #82afc4 94%,
           #a4c8d6 100%);"></div>
-<div id="hL2" style="position:absolute;top:-20%;left:50%;width:100%;height:150%;
+<div id="hL2" style="position:absolute;top:0;left:50%;width:100%;height:100%;
            will-change:transform;pointer-events:none;transform:translateX(-50%);
-           transform-origin:center bottom;">
-        <video autoplay muted loop playsinline preload="auto" data-hq="assets/video/hero-tunku-hd.mp4" poster="assets/img/hero-tunku-poster.jpg" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.1);"><source src="assets/video/hero-tunku.mp4" type="video/mp4"/></video>
+           transform-origin:center center;">
+        <video autoplay muted loop playsinline preload="auto" data-hq="assets/video/hero-tunku-hd.mp4?v=3" poster="assets/img/hero-tunku-poster.jpg?v=3" style="width:100%;height:100%;object-fit:cover;display:block;"><source src="assets/video/hero-tunku.mp4?v=3" type="video/mp4"/></video>
       </div>
 <div id="hL3" style="position:absolute;bottom:0;left:0;right:0;height:45%;
            pointer-events:none;will-change:transform;">
@@ -2587,10 +2588,12 @@ function startHero(){
     document.getElementById('hL1').style.transform =
       'translateY('+ (-st*0.04) +'px)';
 
+    // Video box matches the viewport so the footage renders near 1:1 (sharp).
+    // Lift is capped by the zoom overflow so no edge is ever exposed.
     var houseZ = 1 + easeInOut(range(p, 0.02, 0.20)) * 0.12;
+    var lift = Math.min(st*0.15, (houseZ-1)*0.5*vh);
     document.getElementById('hL2').style.transform =
-      'translateX(-50%) translateY('+ (-st*0.15) +'px) scale(' + houseZ + ')';
-    document.getElementById('hL2').style.transformOrigin = 'center bottom';
+      'translateX(-50%) translateY('+ (-lift) +'px) scale(' + houseZ + ')';
 
     document.getElementById('hL3').style.transform =
       'translateY('+ (-st*0.15) +'px)';
